@@ -1,0 +1,13 @@
+/Users/tobayusuke/.rvm/rubies/ruby-2.2.3/bin/ruby -r ./siteconf20151022-17231-1709goz.rb extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+compiling ruby_http_parser.c
+compiling ryah_http_parser.c
+linking shared-object ruby_http_parser.bundle
+ld: warning: directory not found for option '-L/Users/haven/.sm/pkg/active/lib'
+
+make "DESTDIR=" install
+/usr/bin/install -m 0755 ruby_http_parser.bundle ./.gem.20151022-17231-3b99rz

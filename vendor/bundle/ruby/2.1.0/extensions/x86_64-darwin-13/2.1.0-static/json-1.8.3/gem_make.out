@@ -1,0 +1,10 @@
+/Users/tobayusuke/.rvm/rubies/ruby-2.1.1/bin/ruby -r ./siteconf20151022-6713-kcfa93.rb extconf.rb 
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+make "DESTDIR=" install
+installing default libraries
