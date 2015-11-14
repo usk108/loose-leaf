@@ -1,0 +1,9 @@
+li
+  h2.date
+    = memo.show_date
+  .memo
+    = markdown memo.text
+    / p
+      / = memo.text
+  = link_to '編集', edit_memo_path(memo.id)
+  = link_to '削除', memo_path(memo.id), method: :delete, data: {confirm: '本当に削除しますか？'}

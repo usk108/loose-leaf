@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users
   get 'home/index'
   get 'home/show'
 
-  root to: 'home#index'
+  root to: "home#index"
+  # # ログイン画面をホームにする
+  # devise_scope :user do
+  #   root to: "devise/sessions#new"
+  # end
+
+  resources :memos
+  devise_for :users, path_names: { sign_in: "login", sign_out: "logout"}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
