@@ -5,5 +5,5 @@ li
     = markdown memo.text
     / p
       / = memo.text
-  = link_to '編集', edit_memo_path(memo.id)
-  = link_to '削除', memo_path(memo.id), method: :delete, data: {confirm: '本当に削除しますか？'}
+  = link_to '編集', edit_user_memo_path(id: memo.id)
+  = link_to '削除', user_memo_path(id: memo.id), method: :delete, data: {confirm: '本当に削除しますか？'}

@@ -8,8 +8,11 @@ Rails.application.routes.draw do
   #   root to: "devise/sessions#new"
   # end
 
-  resources :memos
-  devise_for :users, path_names: { sign_in: "login", sign_out: "logout"}
+  devise_for :users, path_names: { sign_in: "login", sign_out: "logout"} 
+
+  resources :users do
+    resources :memos
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

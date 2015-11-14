@@ -1,4 +1,4 @@
-= form_for @memo do |m|
+= form_for([@user, @memo]) do |m|
   = m.label :text
   - if @memo.errors.any?
     = @memo.errors[:text][0]
