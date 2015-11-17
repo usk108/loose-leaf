@@ -48,6 +48,10 @@ class MemosController < ApplicationController
     redirect_to user_memos_path
   end
 
+  def search
+    @memos = Memo.search(params)
+  end
+
   private
 
     def memo_params
