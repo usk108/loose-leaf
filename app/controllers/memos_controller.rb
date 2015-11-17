@@ -49,8 +49,7 @@ class MemosController < ApplicationController
   end
 
   def search
-    set_user
-    @memos = Memo.all
+    @memos = Memo.search(params)
   end
 
   private
