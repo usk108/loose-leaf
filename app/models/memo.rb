@@ -15,6 +15,8 @@ class Memo < ActiveRecord::Base
   belongs_to :user
 
   include Elasticsearch::Model
+
+  # TODO: sidekiqで非同期にインデックスできるようにする
   include Elasticsearch::Model::Callbacks
 
   index_name "memo_#{Rails.env}" #インデックス名を指定
@@ -22,13 +24,7 @@ class Memo < ActiveRecord::Base
   # インデックス設定とマッピング(RDBでいうスキーマ)を設定
   settings do
     mappings dynamic: 'false' do # デフォルトでマッピングが自動作成されるがそれを無効にする
-      # indexesメソッドでインデックスする値を定義します。
-      # analyzer: インデクシング時、検索時に使用するアナライザーを指定します。指定しない場合、グローバルで設定されているアナライザーが利用されます。
-      # kuromojiは日本語のアナライザーです。
       indexes :text, analyzer: 'kuromoji'
-
-      # date型として定義
-      # formatは日付のフォーマットを指定(2015-10-16T19:26:03.679Z)
       indexes :date, type: 'date', format: 'date_time'
       indexes :created_at, type: 'date', format: 'date_time'
       indexes :updated_at, type: 'date', format: 'date_time'
@@ -36,7 +32,6 @@ class Memo < ActiveRecord::Base
   end
 
   # インデクシング時に呼び出されるメソッド
-  # マッピングのデータを返すようにする
   def as_indexed_json(options = {})
     attributes
       .symbolize_keys
@@ -44,7 +39,6 @@ class Memo < ActiveRecord::Base
   end
 
   def self.search(params = {})
-    # 検索パラメータを取得
     keyword = params[:q]
 
     search_definition = Elasticsearch::DSL::Search.search {
@@ -60,8 +54,6 @@ class Memo < ActiveRecord::Base
       }
     }
 
-    # 検索クエリをなげて結果を表示
-    # __elasticsearch__にElasticsearchを操作するたくさんのメソッドが定義されている
     __elasticsearch__.search(search_definition)
   end
 
