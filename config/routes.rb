@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout"} 
 
   resources :users do
-    resources :memos
+    resources :memos do
+      collection do
+        get :search
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,61 @@
+require "bundler/gem_tasks"
+
+desc "Run unit tests"
+task :default => 'test:unit'
+task :test    => 'test:unit'
+
+# ----- Test tasks ------------------------------------------------------------
+
+require 'rake/testtask'
+namespace :test do
+  task :ci_reporter do
+    ENV['CI_REPORTS'] ||= 'tmp/reports'
+    require 'ci/reporter/rake/minitest'
+    Rake::Task['ci:setup:minitest'].invoke
+  end
+
+  Rake::TestTask.new(:unit) do |test|
+    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/unit/**/*_test.rb"]
+    # test.verbose = true
+    # test.warning = true
+  end
+
+  Rake::TestTask.new(:run_integration) do |test|
+    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/integration/**/*_test.rb"]
+  end
+
+  desc "Run integration tests against ActiveModel 3 and 4"
+  task :integration do
+    sh "BUNDLE_GEMFILE='#{File.expand_path('../gemfiles/3.0.gemfile', __FILE__)}' bundle exec rake test:run_integration" unless defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+    sh "BUNDLE_GEMFILE='#{File.expand_path('../gemfiles/4.0.gemfile', __FILE__)}' bundle exec rake test:run_integration"
+  end
+
+  desc "Run unit and integration tests"
+  task :all do
+    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
+  end
+end
+
+# ----- Documentation tasks ---------------------------------------------------
+
+require 'yard'
+YARD::Rake::YardocTask.new(:doc) do |t|
+  t.options = %w| --embed-mixins --markup=markdown |
+end
+
+# ----- Code analysis tasks ---------------------------------------------------
+
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  require 'cane/rake_task'
+  Cane::RakeTask.new(:quality) do |cane|
+    cane.abc_max = 15
+    cane.no_style = true
+  end
+end

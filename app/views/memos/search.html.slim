@@ -1,0 +1,7 @@
+h1 Looseleaf
+.row
+  .col-md-8.col-md-offset-2
+    = link_to "新規作成", new_user_memo_path
+    - if @memos.any?
+      ol.memos
+        = render @memos
