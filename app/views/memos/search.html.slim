@@ -7,12 +7,16 @@ h1 Looseleaf
       button.btn.btn-default type="submit" 検索
     = link_to "新規作成", new_user_memo_path
     - if @memos.any?
+      .result-count
+        | 検索結果：
+        = @memos.results.total
+        | 件
       ol.memos
         / = render @memos
-        - @memos.each do |m|
+        - @memos.records.each do |m|
           li
             h2.date
-              = m.date
+              = m.show_date
             .memo
               = markdown m.text
             = link_to '編集', edit_user_memo_path(id: m.id)

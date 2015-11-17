@@ -15,6 +15,7 @@ class Memo < ActiveRecord::Base
   belongs_to :user
 
   include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   index_name "memo_#{Rails.env}" #インデックス名を指定
 
