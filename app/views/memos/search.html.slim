@@ -15,9 +15,14 @@ h1 Looseleaf
         / = render @memos
         - @memos.records.each do |m|
           li
-            h2.date
-              = m.show_date
-            .memo
-              = markdown m.text
-            = link_to '編集', edit_user_memo_path(id: m.id)
-            = link_to '削除', user_memo_path(id: m.id), method: :delete, data: {confirm: '本当に削除しますか？'}
+            div.search-result
+              .memo
+                / = markdown m.text
+                = m.extract_area(@keyword).html_safe
+              p.memo_date
+                = link_to m.show_date, user_memo_path(id: m.id)
+                span.btn.btn-default.btn-xs
+                  = link_to '編集', edit_user_memo_path(id: m.id)
+              hr
+
+

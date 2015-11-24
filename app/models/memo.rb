@@ -57,6 +57,53 @@ class Memo < ActiveRecord::Base
     __elasticsearch__.search(search_definition)
   end
 
+  def extract_area(keyword)
+    result = Nokogiri::HTML.parse("<div></div>")
+    res_title = result.at_xpath('//div')
+    html = ApplicationController.helpers.markdown self.text
+    doc = Nokogiri::HTML.parse(html)
+    # 検索対象のxpathを指定する（完全一致）
+    (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| @d_path = t.path}
+    path = @d_path.gsub(/\/text\(\)/,"")
+    d = doc.at_xpath(path)
+    @nextSib = d.next_sibling
+    while d.name != @nextSib.name do
+      res_title.add_next_sibling(@nextSib)
+      res_title = @nextSib
+      @nextSib = d.next_sibling
+    end
+    full_html = result.inner_html
+    @result_html = full_html.gsub(/\n<div><\/div>\n\n|<html><body>|<\/body><\/html>/,"")
+  end
+
+  # def extract_area(keyword)
+  #   result = Nokogiri::HTML.parse("<div></div>")
+  #   res_title = result.at_xpath('//div')
+  #   html = ApplicationController.helpers.markdown self.text
+  #   doc = Nokogiri::HTML.parse(html)
+  #   # 検索対象のxpathを指定する（完全一致）
+  #   (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| @d_path = t.path}
+  #   path = @d_path.gsub(/\/text\(\)/,"")
+  #   d = doc.at_xpath(path)
+  #   @nextSib = d.next_sibling
+  #   firstflg = true
+  #   binding.pry
+  #   while d.name != @nextSib.name do
+  #     if(@nextSib.present?)
+  #       if(firstflg)
+  #         res_title.add_child(@nextSib)
+  #         firstflg = false
+  #       else
+  #         res_title.add_next_sibling(@nextSib)
+  #       end
+  #     end
+  #     res_title = @nextSib
+  #     @nextSib = d.next_sibling
+  #   end
+  #   full_html = result.inner_html
+  #   @result_html = full_html.gsub(/<html><body>|<\/body><\/html>/,"")
+  # end
+
   def show_date
     "#{self.date.year}年#{self.date.month}月#{self.date.day}日"
   end
