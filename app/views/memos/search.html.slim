@@ -1,23 +1,27 @@
-h1 Looseleaf
 .row
   .col-md-8.col-md-offset-2
-    = form_tag search_user_memos_path, method: :get, enforce_utf8: false
-      .form-group
-        = search_field_tag :q, params[:q], class: 'form-control', placeholder: '店名、場所、カテゴリ'
-      button.btn.btn-default type="submit" 検索
-    = link_to "新規作成", new_user_memo_path
+    h1 Loose Leaves
     - if @memos.any?
       .result-count
         | 検索結果：
+        = current_document
+        | / 約
         = @memos.results.total
         | 件
+      .show_count
+        |表示件数：
+        = per_page_links
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
           li
-            h2.date
-              = m.show_date
-            .memo
-              = markdown m.text
-            = link_to '編集', edit_user_memo_path(id: m.id)
-            = link_to '削除', user_memo_path(id: m.id), method: :delete, data: {confirm: '本当に削除しますか？'}
+            div.search-result
+              .memo
+                / = markdown m.text
+                = m.extract_area(@keyword).html_safe
+              p.memo_date
+                = link_to m.show_date, user_memo_path(id: m.id)
+                span.btn.btn-default.btn-xs
+                  = link_to '編集', edit_user_memo_path(id: m.id)
+              hr
+      = paginate @memos

@@ -49,7 +49,8 @@ class MemosController < ApplicationController
   end
 
   def search
-    @memos = Memo.search(params)
+    @keyword = params[:q]
+    @memos = Memo.search(params).page(params[:page]).per(params[:per])
   end
 
   private
