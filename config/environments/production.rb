@@ -79,4 +79,6 @@ Rails.application.configure do
 
   # deviseの設定
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['SEARCHBOX_URL']
 end
