@@ -65,7 +65,7 @@ group :development, :test do
   gem 'quiet_assets'      # ログのassetsを表示しないようにし、ログを見やすくしてくれる
 
   # 保守性を上げる
-  gem 'rubocop', require: false          # コーディング規約の自動チェック
+  # gem 'rubocop', require: false          # コーディング規約の自動チェック
 
   gem 'bullet'                           # n+1問題を発見
 end
