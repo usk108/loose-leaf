@@ -31,6 +31,12 @@ class Memo < ActiveRecord::Base
     end
   end
 
+  # ページの表示件数を追加
+  PER_PAGES = [14, 31, 365]
+
+  # デフォルトの１ページの表示件数
+  paginates_per PER_PAGES.first
+
   # インデクシング時に呼び出されるメソッド
   def as_indexed_json(options = {})
     attributes

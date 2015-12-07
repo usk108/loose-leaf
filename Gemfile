@@ -88,6 +88,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'font-awesome-rails'
 gem 'devise'
 gem 'redcarpet'
+gem 'kaminari'
 
 # for elastic search
 gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'

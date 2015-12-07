@@ -1,12 +1,16 @@
 .row
   .col-md-8.col-md-offset-2
     h1 Loose Leaves
-    = link_to "新規作成", new_user_memo_path
     - if @memos.any?
       .result-count
         | 検索結果：
+        = current_document
+        | / 約
         = @memos.results.total
         | 件
+      .show_count
+        |表示件数：
+        = per_page_links
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
@@ -20,5 +24,4 @@
                 span.btn.btn-default.btn-xs
                   = link_to '編集', edit_user_memo_path(id: m.id)
               hr
-
-
+      = paginate @memos
