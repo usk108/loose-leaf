@@ -1,7 +1,8 @@
 .row
   .col-md-8.col-md-offset-2
     h1 Diary Notes
-    = link_to "今日のメモを書く", new_user_memo_path
+    .create_memo
+      = link_to image_tag('/images/icon/create_memo.png', { :border => '0', :alt => '今日のメモを書く'}), new_user_memo_path
     - if @memos.any?
       ol.memos
         = render @memos

@@ -1,9 +1,9 @@
 li
-  h2.date
-    = memo.show_date
-  .memo
-    = markdown memo.text
-    / p
-      / = memo.text
-  = link_to '編集', edit_user_memo_path(id: memo.id)
-  = link_to '削除', user_memo_path(id: memo.id), method: :delete, data: {confirm: '本当に削除しますか？'}
+  .title
+    h2.date
+      = memo.show_date
+      = link_to image_tag('/images/icon/edit_memo.png', { :border => '0', size: "90x23",:alt => 'メモを編集'}), edit_user_memo_path(id: memo.id)
+      = link_to image_tag('/images/icon/delete_memo.png', { :border => '0', size: "90x23", :alt => 'メモを削除'}), user_memo_path(id: memo.id), method: :delete, data: {confirm: '本当に削除しますか？'}
+  .body
+    .memo
+      = markdown memo.text
