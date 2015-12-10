@@ -75,7 +75,6 @@ class Memo < ActiveRecord::Base
 
     result_html = []
     for i in 0...d_path.count do
-      binding.pry
       path = d_path[i].gsub(/\/text\(\)/,"")
 
       # keywordを含むDOM element
@@ -109,7 +108,6 @@ class Memo < ActiveRecord::Base
 
 
   def explore_end?(target_tag, current_tag)
-    # binding.pry
     if /h(\d)/ === target_tag
       target_tag_number = $1.to_i
     end
