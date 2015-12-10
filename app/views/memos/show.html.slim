@@ -1,9 +1,4 @@
 .row
   .col-md-8.col-md-offset-2
     h1 Loose Leaves
-    = form_tag search_user_memos_path, method: :get, enforce_utf8: false
-      .form-group
-        = search_field_tag :q, params[:q], class: 'form-control', placeholder: '店名、場所、カテゴリ'
-      button.btn.btn-default type="submit" 
-        検索
     = render @memo
