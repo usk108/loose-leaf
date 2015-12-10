@@ -1,9 +1,8 @@
 = form_for([@user, @memo]) do |m|
-  = m.label :text
   - if @memo.errors.any?
     = @memo.errors[:text][0]
   br
-  = m.text_area :text, size: "30x10"
+  = m.text_area :text, size: "100x20"
   br
 
   = m.submit
