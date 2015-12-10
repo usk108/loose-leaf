@@ -64,20 +64,30 @@ class Memo < ActiveRecord::Base
   end
 
   def extract_area(keyword)
+    # binding.pry
     result = Nokogiri::HTML.parse("<div></div>")
     res_title = result.at_xpath('//div')
     html = ApplicationController.helpers.markdown self.text
+
+    # メモ(HTML)の全体
+    # この要素をたどっていくことで対象のareaを取得する
     doc = Nokogiri::HTML.parse(html)
+
     # 検索対象のxpathを指定する（完全一致）
     (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| @d_path = t.path}
     path = @d_path.gsub(/\/text\(\)/,"")
+
+    # keywordを含むDOM element
+    # この後を順番に見ていき、自身以上の見出しに出会った段階で探索を終える
     d = doc.at_xpath(path)
+
     @nextSib = d.next_sibling
-    while d.name != @nextSib.name do
+    while @nextSib && d.name != @nextSib.name do
       res_title.add_next_sibling(@nextSib)
       res_title = @nextSib
       @nextSib = d.next_sibling
     end
+
     full_html = result.inner_html
     @result_html = full_html.gsub(/\n<div><\/div>\n\n|<html><body>|<\/body><\/html>/,"")
   end
