@@ -29,6 +29,9 @@
 
 class User < ActiveRecord::Base
   has_many :memos, dependent: :destroy
+  has_many :binders, dependent: :destroy
+  has_many :headlines, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

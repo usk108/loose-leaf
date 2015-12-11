@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :binders, only: [:index, :show, :create, :destroy]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -13,6 +13,8 @@
 class Memo < ActiveRecord::Base
   validates :text, presence: true
   belongs_to :user
+  has_many :headline_memos
+  has_many :headlines, through: :headline_memos
 
   include Elasticsearch::Model
 

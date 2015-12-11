@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114065722) do
+ActiveRecord::Schema.define(version: 20151211121045) do
+
+  create_table "binders", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "headline_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "headline_memos", force: :cascade do |t|
+    t.integer  "headline_id", limit: 4
+    t.integer  "memo_id",     limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "headlines", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "memos", force: :cascade do |t|
     t.datetime "date"
@@ -19,6 +40,15 @@ ActiveRecord::Schema.define(version: 20151114065722) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "user_id",    limit: 4
+  end
+
+  create_table "pieces", force: :cascade do |t|
+    t.text     "html",       limit: 65535
+    t.datetime "date"
+    t.integer  "binder_id",  limit: 4
+    t.integer  "memo_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|
