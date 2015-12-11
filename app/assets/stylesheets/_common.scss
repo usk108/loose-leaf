@@ -7,6 +7,7 @@ body{
 .memos{
   list-style: none;
   margin: 10px 0 0 0;
+  padding-left: 0;
 }
 
 .memo_date {
@@ -21,8 +22,8 @@ hr {
 }
 
 blockquote {
-    padding: 0 0 0 15px;
-    margin: 0 0 0px;
+  padding: 0 0 0 15px;
+  margin: 0 0 0px;
 }
 
 .body {

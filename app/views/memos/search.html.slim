@@ -11,6 +11,9 @@
       .show_count
         |表示件数：
         = per_page_links
+      .title
+        h2
+          = @keyword
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
