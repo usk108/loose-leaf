@@ -47,6 +47,12 @@ class Memo < ActiveRecord::Base
   def self.search(params = {})
     keyword = params[:q]
 
+    # sort_by: ソートのキー('created_at'など)、order: ソートの順序('asc'か'desc')
+    sort_by = 'date'
+    order = 'desc'
+
+    # 検索クエリを作成（Elasticsearch::DSLを利用）
+    # 参考: https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl
     search_definition = Elasticsearch::DSL::Search.search {
       query{
         if keyword.present?
@@ -57,6 +63,12 @@ class Memo < ActiveRecord::Base
         else
           match_all
         end
+      }
+
+      # ソート
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+      sort {
+        by sort_by, order: order
       }
     }
 
