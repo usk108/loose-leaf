@@ -1,2 +1,17 @@
-h1 Binders#show
-p Find me in app/views/binders/show.html.slim
+.row
+  .col-md-8.col-md-offset-2
+    h1 Loose Leaves
+    .title
+      h2
+        = @binder.headline.name
+    ol.pieces
+      - @pieces.each do |p|
+        li
+          div.binder
+            .body
+              .piece
+                = p.html.html_safe
+            p.piece_date
+              = link_to p.date, user_memo_path(id: p.memo.id)
+              span.btn.btn-default.btn-xs
+                = link_to '編集', edit_user_memo_path(id: p.memo.id)

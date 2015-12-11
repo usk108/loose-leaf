@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  html       :text(65535)
-#  date       :datetime
+#  date       :string(255)
 #  binder_id  :integer
 #  memo_id    :integer
 #  created_at :datetime         not null

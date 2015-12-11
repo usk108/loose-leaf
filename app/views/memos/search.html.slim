@@ -14,6 +14,7 @@
       .title
         h2
           = @keyword
+          = link_to image_tag('/images/icon/edit_memo.png', { :border => '0', size: "90x23",:alt => 'バインドする'}), user_binders_path(params: {user_id: current_user.id, q: @keyword}), method: :post
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
