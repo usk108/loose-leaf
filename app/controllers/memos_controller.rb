@@ -1,7 +1,7 @@
 class MemosController < ApplicationController
   def index
     set_user
-    @memos = Memo.all
+    @memos = Memo.page(params[:page])
   end
 
   def show
