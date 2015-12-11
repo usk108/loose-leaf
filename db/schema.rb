@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211180849) do
+ActiveRecord::Schema.define(version: 20151211195814) do
 
   create_table "binders", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -43,12 +43,13 @@ ActiveRecord::Schema.define(version: 20151211180849) do
   end
 
   create_table "pieces", force: :cascade do |t|
-    t.text     "html",       limit: 65535
-    t.string   "date",       limit: 255
-    t.integer  "binder_id",  limit: 4
-    t.integer  "memo_id",    limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "html",        limit: 65535
+    t.string   "date",        limit: 255
+    t.integer  "binder_id",   limit: 4
+    t.integer  "memo_id",     limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "headline_id", limit: 4
   end
 
   create_table "users", force: :cascade do |t|

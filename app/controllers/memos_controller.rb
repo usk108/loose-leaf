@@ -16,10 +16,12 @@ class MemosController < ApplicationController
 
   def create
     set_user
-    @memo = Memo.new(memo_params)
+    @memo = @user.memos.build(memo_params)
     #TODO: 日時重複チェック時に適切なとこに移動
     @memo.date = Time.now
     if @memo.save
+      @memo.update_headlines
+      @memo.update_pieces
       redirect_to user_memos_path
     else
       render 'new'
@@ -35,6 +37,8 @@ class MemosController < ApplicationController
     set_user
     @memo = Memo.find(params[:id])
     if @memo.update(memo_params)
+      @memo.update_headlines
+      @memo.update_pieces
       redirect_to user_memos_path
     else
       render 'edit'

@@ -18,6 +18,11 @@ class Binder < ActiveRecord::Base
     memos = Memo.search(params).per(365).records
     for memo in memos
       piece = self.pieces.create(date: memo.show_date, html: memo.extract_area(keyword))
+      if !(headline = Headline.find_by(name: keyword))
+        headline = self.user.headlines.create(name: keyword)
+      end
+      piece.headline = headline
+      piece.save
       memo.pieces << piece
     end
   end
