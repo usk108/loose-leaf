@@ -1,0 +1,30 @@
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #c78b5b;
+
+  .container .copyright {
+    margin: 20px 0;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  p{
+    color: #F3F3F3;
+  }
+
+}
+
+body > .container {
+  padding: 60px 15px 0;
+}
+ 

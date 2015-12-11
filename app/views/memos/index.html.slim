@@ -6,3 +6,5 @@
     - if @memos.any?
       ol.memos
         = render @memos
+      .pagination-center
+        = paginate @memos
