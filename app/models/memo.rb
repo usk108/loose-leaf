@@ -47,6 +47,12 @@ class Memo < ActiveRecord::Base
   def self.search(params = {})
     keyword = params[:q]
 
+    # sort_by: ソートのキー('created_at'など)、order: ソートの順序('asc'か'desc')
+    sort_by = 'date'
+    order = 'desc'
+
+    # 検索クエリを作成（Elasticsearch::DSLを利用）
+    # 参考: https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl
     search_definition = Elasticsearch::DSL::Search.search {
       query{
         if keyword.present?
@@ -58,59 +64,72 @@ class Memo < ActiveRecord::Base
           match_all
         end
       }
+
+      # ソート
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+      sort {
+        by sort_by, order: order
+      }
     }
 
     __elasticsearch__.search(search_definition)
   end
 
   def extract_area(keyword)
-    result = Nokogiri::HTML.parse("<div></div>")
-    res_title = result.at_xpath('//div')
     html = ApplicationController.helpers.markdown self.text
+    # メモ(HTML)の全体
+    # この要素をたどっていくことで対象のareaを取得する
     doc = Nokogiri::HTML.parse(html)
-    # 検索対象のxpathを指定する（完全一致）
-    (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| @d_path = t.path}
-    path = @d_path.gsub(/\/text\(\)/,"")
-    d = doc.at_xpath(path)
-    @nextSib = d.next_sibling
-    while d.name != @nextSib.name do
-      res_title.add_next_sibling(@nextSib)
-      res_title = @nextSib
-      @nextSib = d.next_sibling
-    end
-    full_html = result.inner_html
-    @result_html = full_html.gsub(/\n<div><\/div>\n\n|<html><body>|<\/body><\/html>/,"")
-  end
 
-  # def extract_area(keyword)
-  #   result = Nokogiri::HTML.parse("<div></div>")
-  #   res_title = result.at_xpath('//div')
-  #   html = ApplicationController.helpers.markdown self.text
-  #   doc = Nokogiri::HTML.parse(html)
-  #   # 検索対象のxpathを指定する（完全一致）
-  #   (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| @d_path = t.path}
-  #   path = @d_path.gsub(/\/text\(\)/,"")
-  #   d = doc.at_xpath(path)
-  #   @nextSib = d.next_sibling
-  #   firstflg = true
-  #   binding.pry
-  #   while d.name != @nextSib.name do
-  #     if(@nextSib.present?)
-  #       if(firstflg)
-  #         res_title.add_child(@nextSib)
-  #         firstflg = false
-  #       else
-  #         res_title.add_next_sibling(@nextSib)
-  #       end
-  #     end
-  #     res_title = @nextSib
-  #     @nextSib = d.next_sibling
-  #   end
-  #   full_html = result.inner_html
-  #   @result_html = full_html.gsub(/<html><body>|<\/body><\/html>/,"")
-  # end
+    # 検索対象のxpathを指定する（完全一致）
+    d_path = []
+    (doc/'//*/text()').select{|t| t.text == keyword}.map{|t| d_path.push(t.path) }
+
+    result_html = []
+    for i in 0...d_path.count do
+      path = d_path[i].gsub(/\/text\(\)/,"")
+
+      # keywordを含むDOM element
+      # この後を順番に見ていき、自身以上の見出しに出会った段階で探索を終える
+      d = doc.at_xpath(path)
+
+      nextSib = d.next_sibling
+      result = Nokogiri::HTML.parse("<div></div>")
+      res_title = result.at_xpath('//div')
+      while nextSib && explore_end?(d.name, nextSib.name) do
+        res_title.add_next_sibling(nextSib)
+        res_title = nextSib
+        nextSib = d.next_sibling
+      end
+
+      full_html = result.inner_html
+      result_html[i] = full_html.gsub(/\n<div><\/div>\n\n|<html><body>|<\/body><\/html>/,"")
+    end
+
+    # 複数なら間に線でも入れておく
+    if d_path.count == 1
+      result_html[0]
+    else
+      result_html.join("<hr>")
+    end
+  end
 
   def show_date
     "#{self.date.year}年#{self.date.month}月#{self.date.day}日"
+  end
+
+
+  def explore_end?(target_tag, current_tag)
+    if /h(\d)/ === target_tag
+      target_tag_number = $1.to_i
+    end
+    if /h(\d)/ === current_tag
+      current_tag_number = $1.to_i
+    end
+    if target_tag_number && current_tag_number
+      target_tag_number < current_tag_number
+    else
+      true
+    end
   end
 end

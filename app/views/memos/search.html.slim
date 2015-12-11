@@ -11,17 +11,20 @@
       .show_count
         |表示件数：
         = per_page_links
+      .title
+        h2
+          = @keyword
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
           li
             div.search-result
-              .memo
-                / = markdown m.text
-                = m.extract_area(@keyword).html_safe
+              .body
+                .memo
+                  = m.extract_area(@keyword).html_safe
               p.memo_date
                 = link_to m.show_date, user_memo_path(id: m.id)
                 span.btn.btn-default.btn-xs
                   = link_to '編集', edit_user_memo_path(id: m.id)
-              hr
+              / hr
       = paginate @memos
