@@ -15,7 +15,7 @@ class Memo < ActiveRecord::Base
   belongs_to :user
   has_many :headline_memos
   has_many :headlines, through: :headline_memos
-  has_many :pieces
+  has_many :pieces, dependent: :destroy
 
   include Elasticsearch::Model
 
