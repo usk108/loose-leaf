@@ -1,5 +1,6 @@
 class BindersController < ApplicationController
   def index
+    @binders = current_user.binders.includes(:headline)
   end
 
   def show

@@ -10,3 +10,23 @@
   padding: 0px;
   border: 0px;
 }
+
+.binders{
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding-left: 0;
+
+  .binder{
+    height: 73px;
+    background-image: url(/images/background/looseleaf_title.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    padding-top: 18px;
+    padding-left: 270px;
+    margin-top: 35px;
+  }
+
+  i{
+    font-size: 35px;
+  }
+}
