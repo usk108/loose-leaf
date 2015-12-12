@@ -2,6 +2,7 @@
   list-style: none;
   margin: 10px 0 0 0;
   padding-left: 0;
+  margin-top: 3px;
 }
 
 .piece_date {
@@ -9,6 +10,13 @@
   margin: 0px;
   padding: 0px;
   border: 0px;
+  height: 3px;
+
+  a{
+    position: relative;
+    bottom: 20px;
+    background-color: #EDF399;
+  }
 }
 
 .binders{

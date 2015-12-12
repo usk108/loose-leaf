@@ -11,7 +11,7 @@
             .body
               .piece
                 = p.html.html_safe
-            p.piece_date
+            div.piece_date
               = link_to p.date, user_memo_path(id: p.memo.id)
-              span.btn.btn-default.btn-xs
-                = link_to '編集', edit_user_memo_path(id: p.memo.id)
+              / span.btn.btn-default.btn-xs
+              /   = link_to '編集', edit_user_memo_path(id: p.memo.id)
