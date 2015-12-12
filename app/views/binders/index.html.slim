@@ -1,0 +1,10 @@
+.row
+  .col-md-8.col-md-offset-2
+    h1 My Binders
+    ol.binders
+      - @binders.each do |b|
+        li
+          div.binder
+            = link_to user_binder_path(id: b.id) do
+              i.glyphicon.glyphicon-paperclip[aria-hidden="true"]
+                =  b.headline.name

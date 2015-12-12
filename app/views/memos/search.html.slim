@@ -14,6 +14,7 @@
       .title
         h2
           = @keyword
+          = link_to image_tag('/images/icon/edit_memo.png', { :border => '0', size: "90x23",:alt => 'バインドする'}), user_binders_path(params: {user_id: current_user.id, q: @keyword}), method: :post
       ol.memos
         / = render @memos
         - @memos.records.each do |m|
@@ -22,10 +23,10 @@
               .body
                 .memo
                   = m.extract_area(@keyword).html_safe
-              p.memo_date
+              div.memo_date
                 = link_to m.show_date, user_memo_path(id: m.id)
-                span.btn.btn-default.btn-xs
-                  = link_to '編集', edit_user_memo_path(id: m.id)
+                / span.btn.btn-default.btn-xs
+                /   = link_to '編集', edit_user_memo_path(id: m.id)
               / hr
       .pagination-center
         = paginate @memos

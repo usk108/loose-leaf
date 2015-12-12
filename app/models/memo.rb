@@ -13,6 +13,9 @@
 class Memo < ActiveRecord::Base
   validates :text, presence: true
   belongs_to :user
+  has_many :headline_memos
+  has_many :headlines, through: :headline_memos
+  has_many :pieces, dependent: :destroy
 
   include Elasticsearch::Model
 
@@ -132,4 +135,47 @@ class Memo < ActiveRecord::Base
       true
     end
   end
+
+  # memo.headlinesを更新する
+  def update_headlines
+    html = ApplicationController.helpers.markdown self.text
+    doc = Nokogiri::HTML.parse(html)
+    for i in 1..6
+      tag = 'h' + i.to_s
+      hls = doc.xpath('//'+tag)
+      for j in 0...hls.count
+        # そもそもこの名前のheadlineがまだない時 => 作って追加
+        # この名前のheadlineは存在するが、memoと関連付けられてない時 => 見つけてきたものを追加
+        # この名前のheadlineは存在し、memoと関連付けられている時 => 何もしない
+        if !(headline = Headline.find_by(name: hls[j].text))
+          # 作って追加
+          hl = self.headlines.create(name: hls[j].text)
+          hl.user = self.user
+          hl.save
+        elsif !self.headlines.include?(headline)
+          # 見つけてきたものを追加
+          self.headlines << headline
+        end
+      end
+    end
+  end
+
+  def update_pieces
+    user = self.user
+    self.headlines.each do |hl|
+      user.binders.each do |bd|
+        # bindersと関連付けられた見出しをこのmemoが持っていて、
+        if bd.headline == hl
+          # pieceが存在するとき => pieceを更新
+          if piece = Piece.find_by(headline: hl, memo: self)
+            piece.update(html: self.extract_area(hl.name))
+          # pieceが存在しないとき => pieceを作る
+          else
+            bd.piece.create(date: self.show_date, html: self.extract_area(hl.name), memo: self)
+          end
+        end
+      end
+    end
+  end
+
 end

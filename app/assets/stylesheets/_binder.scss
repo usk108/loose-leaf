@@ -1,0 +1,40 @@
+.pieces{
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding-left: 0;
+  margin-top: 3px;
+}
+
+.piece_date {
+  text-align: right;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  height: 3px;
+
+  a{
+    position: relative;
+    bottom: 20px;
+    background-color: #EDF399;
+  }
+}
+
+.binders{
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding-left: 0;
+
+  .binder{
+    height: 73px;
+    background-image: url(/images/background/looseleaf_title.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    padding-top: 18px;
+    padding-left: 270px;
+    margin-top: 35px;
+  }
+
+  i{
+    font-size: 35px;
+  }
+}

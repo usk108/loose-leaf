@@ -28,7 +28,7 @@ header
                 i.glyphicon.glyphicon-tags[aria-hidden="true"]
                   | Tags
             li
-              = link_to root_path do
+              = link_to user_binders_path(current_user.id) do
                 i.glyphicon.glyphicon-bookmark[aria-hidden="true"]
                   | MyBinder
             li
