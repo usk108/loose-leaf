@@ -1,10 +1,11 @@
 .footer {
+  position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #c78b5b;
-  margin-top: 300px;
+  margin-top: 100px;
 
   .container .copyright {
     margin: 20px 0;

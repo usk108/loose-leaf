@@ -1,7 +1,19 @@
 @import "bootstrap";
 
+html {
+  font-size: 62.5%;
+  height: 100%;
+}
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+
 body{
+  height: 100%;
   background-image: url(/images/background/nuno1.png);
+  position: relative;
+  min-height: 100%;
+  height: auto !important;
 }
 
 .memos{
@@ -32,6 +44,10 @@ hr {
 blockquote {
   padding: 0 0 0 15px;
   margin: 0 0 0px;
+}
+
+.row{
+  padding-bottom: 100px;
 }
 
 .body {
