@@ -1,4 +1,6 @@
 class BindersController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @binders = current_user.binders.includes(:headline)
   end
