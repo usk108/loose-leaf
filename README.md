@@ -20,7 +20,7 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 気になるトピックに関するメモの文章の検索結果はブックマーク登録できます。
 元テキストファイルを変更することなく、必要な情報だけをまとめたブックマークで大量のメモを便利に管理しましょう。
 
-![ホーム画面](https://github.com/usk108/loose-leaf/wiki/home.jpg)
+![ホーム画面](https://github.com/usk108/loose-leaf/wiki/images/home.jpg)
 ---
 
 ## 実現したい哲学
@@ -67,7 +67,7 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 - １つのメモ表示エリアには編集，削除ボタンが設置されている
 - 関連gem
     - kaminari
-![一覧画面](https://github.com/usk108/loose-leaf/wiki/index.jpg)
+![一覧画面](https://github.com/usk108/loose-leaf/wiki/images/index.jpg)
 
 
 ### 外部メモのインポート・編集・変更内容反映（未実装）
@@ -100,7 +100,7 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
     - elasticsearch-model
     - elasticsearch-rails
 
-![一覧画面](https://github.com/usk108/loose-leaf/wiki/extract_todo.jpg)
+![一覧画面](https://github.com/usk108/loose-leaf/wiki/images/extract_todo.jpg)
 
 
 ### バインド機能
