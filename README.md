@@ -67,6 +67,7 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 - １つのメモ表示エリアには編集，削除ボタンが設置されている
 - 関連gem
     - kaminari
+
 ![一覧画面](https://github.com/usk108/loose-leaf/wiki/images/index.jpg)
 
 
