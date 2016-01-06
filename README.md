@@ -118,6 +118,8 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 ユーザーのモデル
 
 ![ER図](https://github.com/usk108/loose-leaf/er.png)
+![ER図](./er.png)
+![ER図](er.png)
 
 ```ruby:user.rb
 # Table name: users
