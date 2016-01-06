@@ -7,6 +7,8 @@ Loose Leafはメモ統合管理Webアプリです。
 
 ## アプリ概要
 
+![ホーム画面](https://github.com/usk108/loose-leaf/wiki/images/home.jpg)
+
 ### あらゆる形式のメモに同期
 いろんな場所にいろんな形式のメモが散在していませんか？
 LooseLeafならアプリ上での独自のメモ管理の他、Evernote、kobito、Dropbox上の全てのメモと同期し、一括管理することができます。
@@ -20,7 +22,6 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 気になるトピックに関するメモの文章の検索結果はブックマーク登録できます。
 元テキストファイルを変更することなく、必要な情報だけをまとめたブックマークで大量のメモを便利に管理しましょう。
 
-![ホーム画面](https://github.com/usk108/loose-leaf/wiki/images/home.jpg)
 ---
 
 ## 実現したい哲学
@@ -115,6 +116,8 @@ LooseLeafなら全てのメモの中から特定のトピックに関する文�
 
 #### User model
 ユーザーのモデル
+
+![ER図](https://github.com/usk108/loose-leaf/er.png)
 
 ```ruby:user.rb
 # Table name: users
